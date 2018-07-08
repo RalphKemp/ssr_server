@@ -5,8 +5,16 @@ import Home from './client/components/Home';
 
 const app = express();
 
+
+app.use(express.static('public'));
 app.get("/", (req, res) => {
   const content = renderToString(<Home />);
+
+  const html = `
+    <html>
+    </html>
+  `;
+
   res.send(content);
 });
 
