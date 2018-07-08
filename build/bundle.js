@@ -7001,19 +7001,31 @@ module.exports = memoizeStringOnly;
 "use strict";
 
 
-var express = __webpack_require__(52);
-var React = __webpack_require__(16);
-var renderToString = __webpack_require__(108).renderToString;
-var Home = __webpack_require__(117).default;
-var app = express();
+var _express = __webpack_require__(52);
 
-app.get('/', function (req, res) {
-  var content = renderToString(React.createElement(Home, null));
+var _express2 = _interopRequireDefault(_express);
+
+var _react = __webpack_require__(16);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _server = __webpack_require__(108);
+
+var _Home = __webpack_require__(117);
+
+var _Home2 = _interopRequireDefault(_Home);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var app = (0, _express2.default)();
+
+app.get("/", function (req, res) {
+  var content = (0, _server.renderToString)(_react2.default.createElement(_Home2.default, null));
   res.send(content);
 });
 
 app.listen(3000, function () {
-  console.log('listening on port 3000');
+  console.log("listening on port 3000");
 });
 
 /***/ }),
@@ -22125,9 +22137,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Home = function Home() {
   return _react2.default.createElement(
-    'div',
+    "div",
     null,
-    'I\'m the home page'
+    "I'm the homeee page"
   );
 };
 
