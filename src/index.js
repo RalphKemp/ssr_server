@@ -12,11 +12,15 @@ app.get("/", (req, res) => {
 
   const html = `
     <html>
-
+      <head></head>
+      <body>
+        <div id="root">${content}</div>
+        <script src="bundle.js"></script>
+      </body>
     </html>
   `;
 
-  res.send(content);
+  res.send(html);
 });
 
 app.listen(3000, () => {
