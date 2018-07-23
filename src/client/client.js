@@ -1,4 +1,5 @@
 // Startup point for the client side app
+import 'babel-polyfill'; // asyncawait syntax
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";

@@ -82,6 +82,8 @@ module.exports = require("react-router-dom");
 "use strict";
 
 
+__webpack_require__(17);
+
 var _express = __webpack_require__(3);
 
 var _express2 = _interopRequireDefault(_express);
@@ -96,7 +98,8 @@ var _createStore2 = _interopRequireDefault(_createStore);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var app = (0, _express2.default)();
+var app = (0, _express2.default)(); // asyncawait syntax
+
 
 app.use(_express2.default.static("public"));
 app.get("*", function (req, res) {
@@ -192,13 +195,18 @@ var _Home = __webpack_require__(8);
 
 var _Home2 = _interopRequireDefault(_Home);
 
+var _UsersList = __webpack_require__(16);
+
+var _UsersList2 = _interopRequireDefault(_UsersList);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function () {
   return _react2.default.createElement(
     "div",
     null,
-    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/", component: _Home2.default })
+    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/", component: _Home2.default }),
+    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/users", component: _UsersList2.default })
   );
 };
 
@@ -327,7 +335,6 @@ var _actions = __webpack_require__(14);
 
 // FETCH_USERS is a named export, so we have to use the curly braces
 
-
 exports.default = function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments[1];
@@ -370,11 +377,15 @@ var fetchUsers = exports.fetchUsers = function fetchUsers() {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              res = _axios2.default.get("http://react-ssr-api.herokuapp.com/users");
-
-              dispatch({ type: FETCH_USERS, payload: res.data });
+              _context.next = 2;
+              return _axios2.default.get("http://react-ssr-api.herokuapp.com/users");
 
             case 2:
+              res = _context.sent;
+
+              dispatch({ type: FETCH_USERS, payload: res });
+
+            case 4:
             case "end":
               return _context.stop();
           }
@@ -393,6 +404,103 @@ var fetchUsers = exports.fetchUsers = function fetchUsers() {
 /***/ (function(module, exports) {
 
 module.exports = require("axios");
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(6);
+
+var _actions = __webpack_require__(14);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var UsersList = function (_Component) {
+  _inherits(UsersList, _Component);
+
+  function UsersList() {
+    _classCallCheck(this, UsersList);
+
+    return _possibleConstructorReturn(this, (UsersList.__proto__ || Object.getPrototypeOf(UsersList)).apply(this, arguments));
+  }
+
+  _createClass(UsersList, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.fetchUsers();
+    }
+  }, {
+    key: "renderUsers",
+    value: function renderUsers() {
+      return this.props.users.map(function (user) {
+        return _react2.default.createElement(
+          "li",
+          { key: user.id },
+          user.name
+        );
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react2.default.createElement(
+        "div",
+        null,
+        "here's a list of our things:",
+        _react2.default.createElement(
+          "ul",
+          null,
+          this.renderUsers()
+        )
+      );
+    }
+  }]);
+
+  return UsersList;
+}(_react.Component);
+
+function mapStateToProps(_ref) {
+  var users = _ref.users;
+
+  return { users: users };
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, { fetchUsers: _actions.fetchUsers })(UsersList);
+
+// function mapStateToProps(state) {
+//   return { users: state.users};
+// }
+
+// remember, just having the mapStateToProps doesn't actually do it,
+// it's a insctruction, we want to have this.props.users avaliable.
+// That's why we use connect, to actually map the state to props.
+// Then for the second argument we have our action/s, and then we export
+// our class component.
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+module.exports = require("babel-polyfill");
 
 /***/ })
 /******/ ]);
